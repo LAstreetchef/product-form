@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Information Form - Google Merchant Center</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      min-height: 100vh;
+      padding: 40px 20px;
+      color: #e4e4e7;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 2rem;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      color: #a1a1aa;
+      font-size: 1rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .form-section {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+      margin-bottom: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-number {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .section-title h2 {
+      font-size: 1.25rem;
+      color: #fafafa;
+      margin-bottom: 4px;
+    }
+
+    .section-title p {
+      font-size: 0.875rem;
+      color: #a1a1aa;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.9375rem;
+      font-weight: 500;
+      color: #e4e4e7;
+      margin-bottom: 8px;
+    }
+
+    label .required {
+      color: #ef4444;
+      margin-left: 4px;
+    }
+
+    label .optional {
+      color: #71717a;
+      font-weight: 400;
+      font-size: 0.8125rem;
+      margin-left: 8px;
+    }
+
+    .help-text {
+      font-size: 0.8125rem;
+      color: #71717a;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .help-text a {
+      color: #f97316;
+      text-decoration: none;
+    }
+
+    .help-text a:hover {
+      text-decoration: underline;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    input[type="url"],
+    input[type="date"],
+    input[type="email"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      font-family: inherit;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      color: #fafafa;
+      transition: all 0.2s ease;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.15);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #52525b;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    select {
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2371717a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    @media (max-width: 600px) {
+      .input-row {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .checkbox-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .checkbox-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .checkbox-item input {
+      width: 20px;
+      height: 20px;
+      margin-top: 2px;
+      cursor: pointer;
+      accent-color: #f97316;
+    }
+
+    .checkbox-label {
+      font-size: 0.9375rem;
+      color: #d4d4d8;
+    }
+
+    .checkbox-label strong {
+      color: #fafafa;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .info-box {
+      background: rgba(249, 115, 22, 0.1);
+      border: 1px solid rgba(249, 115, 22, 0.3);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .info-box h4 {
+      color: #f97316;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-box p {
+      font-size: 0.875rem;
+      color: #d4d4d8;
+      line-height: 1.6;
+    }
+
+    .info-box ul {
+      font-size: 0.875rem;
+      color: #d4d4d8;
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+
+    .info-box li {
+      margin-bottom: 4px;
+    }
+
+    .file-upload {
+      border: 2px dashed rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 32px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .file-upload:hover {
+      border-color: #f97316;
+      background: rgba(249, 115, 22, 0.05);
+    }
+
+    .file-upload-icon {
+      font-size: 2rem;
+      margin-bottom: 12px;
+    }
+
+    .file-upload-text {
+      color: #a1a1aa;
+      font-size: 0.9375rem;
+    }
+
+    .file-upload-text strong {
+      color: #f97316;
+    }
+
+    .submit-section {
+      text-align: center;
+      padding-top: 20px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #fff;
+      font-size: 1.125rem;
+      font-weight: 600;
+      padding: 16px 48px;
+      border: none;
+      border-radius: 9999px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px -10px rgba(249, 115, 22, 0.5);
+    }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, #f97316, #f59e0b);
+      width: 0%;
+      transition: width 0.3s ease;
+      z-index: 100;
+    }
+
+    .character-count {
+      font-size: 0.75rem;
+      color: #71717a;
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    .character-count.warning {
+      color: #f59e0b;
+    }
+
+    .character-count.error {
+      color: #ef4444;
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  
+  <div class="container">
+    <div class="header">
+      <h1>📦 Product Information Form</h1>
+      <p>Complete this form to optimize your products for Google Merchant Center and improve visibility across Google Shopping, Search, and more.</p>
+    </div>
+
+    <form id="productForm">
+      <!-- Section 1: Basic Product Info -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">1</div>
+          <div class="section-title">
+            <h2>Basic Product Information</h2>
+            <p>Essential details that identify your product</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Product Title <span class="required">*</span></label>
+          <input type="text" name="title" placeholder="e.g., Living Nectar - Premium Palmyra Sugar Alternative (10.58 oz)" required maxlength="150">
+          <div class="character-count"><span id="titleCount">0</span>/150 characters</div>
+          <p class="help-text">Include brand, product name, key attributes, and size. Avoid promotional text like "Best Seller" or "Free Shipping".</p>
+        </div>
+
+        <div class="form-group">
+          <label>Brand Name <span class="required">*</span></label>
+          <input type="text" name="brand" placeholder="e.g., Living Nectar" required>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>SKU / Product ID <span class="required">*</span></label>
+            <input type="text" name="sku" placeholder="e.g., LN-JAR-300G" required>
+          </div>
+          <div class="form-group">
+            <label>Price <span class="required">*</span></label>
+            <input type="text" name="price" placeholder="e.g., 49.95 USD" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Product Description <span class="required">*</span></label>
+          <textarea name="description" placeholder="Describe your product's key features, benefits, and what makes it unique. Include ingredients, use cases, and any certifications." required maxlength="5000"></textarea>
+          <div class="character-count"><span id="descCount">0</span>/5000 characters (recommended: 500-1500)</div>
+          <p class="help-text">Write for customers, not search engines. Be specific about benefits and use natural language.</p>
+        </div>
+      </div>
+
+      <!-- Section 2: GTINs & Identifiers -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">2</div>
+          <div class="section-title">
+            <h2>Product Identifiers (GTINs)</h2>
+            <p>Global Trade Item Numbers help customers find your products</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h4>💡 Why GTINs Matter</h4>
+          <p>Products with GTINs get better placement in Google Shopping results. If you don't have one yet, you can apply for a UPC through GS1.</p>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>UPC / GTIN-12 <span class="optional">(Recommended)</span></label>
+            <input type="text" name="upc" placeholder="e.g., 012345678901" pattern="[0-9]{12}" maxlength="12">
+            <p class="help-text">12-digit barcode number found on product packaging</p>
+          </div>
+          <div class="form-group">
+            <label>EAN / GTIN-13 <span class="optional">(If applicable)</span></label>
+            <input type="text" name="ean" placeholder="e.g., 0012345678901" pattern="[0-9]{13}" maxlength="13">
+            <p class="help-text">13-digit European Article Number</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>MPN (Manufacturer Part Number) <span class="optional">(If no GTIN)</span></label>
+          <input type="text" name="mpn" placeholder="e.g., LN-PALM-300">
+          <p class="help-text">If you manufacture this product and don't have a GTIN, provide your internal part number.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Does this product have a GTIN?</label>
+          <select name="gtin_exists">
+            <option value="">Select an option</option>
+            <option value="yes">Yes, I have a GTIN/UPC</option>
+            <option value="pending">I'm in the process of getting one</option>
+            <option value="exempt">My product is exempt (handmade, custom, vintage)</option>
+            <option value="no">No, and I need help getting one</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 3: Product Attributes -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">3</div>
+          <div class="section-title">
+            <h2>Product Attributes</h2>
+            <p>Additional details to help categorize your product</p>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>Condition <span class="required">*</span></label>
+            <select name="condition" required>
+              <option value="">Select condition</option>
+              <option value="new" selected>New</option>
+              <option value="refurbished">Refurbished</option>
+              <option value="used">Used</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Availability <span class="required">*</span></label>
+            <select name="availability" required>
+              <option value="">Select availability</option>
+              <option value="in_stock" selected>In Stock</option>
+              <option value="out_of_stock">Out of Stock</option>
+              <option value="preorder">Preorder</option>
+              <option value="backorder">Backorder</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>Age Group <span class="optional">(If applicable)</span></label>
+            <select name="age_group">
+              <option value="">Select age group</option>
+              <option value="adult" selected>Adult</option>
+              <option value="kids">Kids</option>
+              <option value="toddler">Toddler</option>
+              <option value="infant">Infant</option>
+              <option value="newborn">Newborn</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Gender <span class="optional">(If applicable)</span></label>
+            <select name="gender">
+              <option value="">Select gender</option>
+              <option value="unisex" selected>Unisex</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Google Product Category</label>
+          <input type="text" name="google_category" placeholder="e.g., Food, Beverages & Tobacco > Food Items > Sweeteners > Sugar">
+          <p class="help-text">Find your category in <a href="https://support.google.com/merchants/answer/6324436" target="_blank">Google's taxonomy</a>. For Living Nectar, use: Food, Beverages & Tobacco > Food Items > Sweeteners > Sugar</p>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>Product Weight</label>
+            <input type="text" name="weight" placeholder="e.g., 300g or 10.58 oz">
+          </div>
+          <div class="form-group">
+            <label>Product Dimensions</label>
+            <input type="text" name="dimensions" placeholder="e.g., 3.5 x 3.5 x 4 inches">
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: Images -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">4</div>
+          <div class="section-title">
+            <h2>Product Images</h2>
+            <p>High-quality images are critical for conversions</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h4>📸 Image Requirements</h4>
+          <ul>
+            <li>Minimum size: 100 x 100 pixels (recommended: 800 x 800 or higher)</li>
+            <li>Show the entire product clearly</li>
+            <li>Use a white or transparent background for main image</li>
+            <li>No watermarks, logos, or promotional text on images</li>
+            <li>Accepted formats: JPEG, PNG, GIF, WebP</li>
+          </ul>
+        </div>
+
+        <div class="form-group">
+          <label>Main Product Image URL <span class="required">*</span></label>
+          <input type="url" name="image_url" placeholder="https://yourstore.com/images/product-main.jpg" required>
+          <p class="help-text">Direct link to your highest quality product image</p>
+        </div>
+
+        <div class="form-group">
+          <label>Additional Image URLs <span class="optional">(One per line)</span></label>
+          <textarea name="additional_images" placeholder="https://yourstore.com/images/product-angle2.jpg&#10;https://yourstore.com/images/product-lifestyle.jpg&#10;https://yourstore.com/images/product-ingredients.jpg" rows="4"></textarea>
+          <p class="help-text">Include lifestyle shots, ingredient lists, usage examples, etc.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Do your images meet the requirements?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-item">
+              <input type="checkbox" name="image_check_size">
+              <span class="checkbox-label">Images are at least 100x100 pixels (ideally 800x800+)</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="image_check_full">
+              <span class="checkbox-label">Images show the complete product (not cropped)</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="image_check_clean">
+              <span class="checkbox-label">No watermarks, logos, or promotional text</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" name="image_check_quality">
+              <span class="checkbox-label">Images are clear, well-lit, and in focus</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: Shipping & Tax -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">5</div>
+          <div class="section-title">
+            <h2>Shipping & Tax Information</h2>
+            <p>Help customers understand total costs</p>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>Shipping Cost (US)</label>
+            <input type="text" name="shipping_us" placeholder="e.g., 5.99 USD or Free">
+          </div>
+          <div class="form-group">
+            <label>Shipping Time</label>
+            <input type="text" name="shipping_time" placeholder="e.g., 3-5 business days">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Free Shipping Threshold</label>
+          <input type="text" name="free_shipping_threshold" placeholder="e.g., Free shipping on orders over $50">
+        </div>
+
+        <div class="form-group">
+          <label>Tax Settings</label>
+          <select name="tax_settings">
+            <option value="">Select tax handling</option>
+            <option value="included">Tax included in price</option>
+            <option value="calculated">Tax calculated at checkout</option>
+            <option value="exempt">Product is tax exempt</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Section 6: Promotions & Events -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">6</div>
+          <div class="section-title">
+            <h2>Promotions & Upcoming Events</h2>
+            <p>Plan ahead for sales, launches, and seasonal campaigns</p>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h4>🚀 Planning Tip</h4>
+          <p>Submit promotions at least 24 hours in advance. For major events (Black Friday, product launches), submit 1-2 weeks early to ensure approval.</p>
+        </div>
+
+        <div class="form-group">
+          <label>Current Promotion <span class="optional">(If any)</span></label>
+          <input type="text" name="current_promo" placeholder="e.g., Buy One Get One Free on Subscription Orders">
+        </div>
+
+        <div class="input-row">
+          <div class="form-group">
+            <label>Promotion Start Date</label>
+            <input type="date" name="promo_start">
+          </div>
+          <div class="form-group">
+            <label>Promotion End Date</label>
+            <input type="date" name="promo_end">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Sale Price <span class="optional">(If on sale)</span></label>
+          <input type="text" name="sale_price" placeholder="e.g., 39.95 USD">
+        </div>
+
+        <div class="form-group">
+          <label>Upcoming Product Launches or Events</label>
+          <textarea name="upcoming_events" placeholder="Describe any upcoming launches, seasonal promotions, or events you're planning..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Section 7: Additional Info -->
+      <div class="form-section">
+        <div class="section-header">
+          <div class="section-number">7</div>
+          <div class="section-title">
+            <h2>Additional Information</h2>
+            <p>Any other details that might be helpful</p>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Product Highlights / Key Features</label>
+          <textarea name="highlights" placeholder="• Low Glycemic Index&#10;• Rich in B12 Vitamins&#10;• Prebiotic Benefits&#10;• Keto-Friendly&#10;• Sustainably Sourced" rows="5"></textarea>
+          <p class="help-text">List 4-6 key selling points, one per line</p>
+        </div>
+
+        <div class="form-group">
+          <label>Certifications <span class="optional">(If any)</span></label>
+          <input type="text" name="certifications" placeholder="e.g., USDA Organic, Non-GMO, Fair Trade, Kosher">
+        </div>
+
+        <div class="form-group">
+          <label>Target Audience</label>
+          <input type="text" name="target_audience" placeholder="e.g., Health-conscious adults, keto dieters, diabetics, fitness enthusiasts">
+        </div>
+
+        <div class="form-group">
+          <label>Competitor Products</label>
+          <textarea name="competitors" placeholder="List similar products customers might compare yours to..." rows="2"></textarea>
+          <p class="help-text">This helps us understand positioning and keywords</p>
+        </div>
+
+        <div class="form-group">
+          <label>Anything Else We Should Know?</label>
+          <textarea name="notes" placeholder="Any other details, concerns, or questions..." rows="3"></textarea>
+        </div>
+      </div>
+
+      <div class="submit-section">
+        <button type="submit" class="submit-btn">Submit Product Information</button>
+        <p class="help-text" style="margin-top: 16px;">You'll receive a confirmation email with next steps</p>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    // Character counters
+    const titleInput = document.querySelector('input[name="title"]');
+    const titleCount = document.getElementById('titleCount');
+    const descInput = document.querySelector('textarea[name="description"]');
+    const descCount = document.getElementById('descCount');
+
+    titleInput.addEventListener('input', () => {
+      const count = titleInput.value.length;
+      titleCount.textContent = count;
+      titleCount.parentElement.className = 'character-count' + (count > 140 ? ' warning' : '') + (count > 150 ? ' error' : '');
+    });
+
+    descInput.addEventListener('input', () => {
+      const count = descInput.value.length;
+      descCount.textContent = count;
+      descCount.parentElement.className = 'character-count' + (count > 4500 ? ' warning' : '') + (count > 5000 ? ' error' : '');
+    });
+
+    // Progress bar
+    const form = document.getElementById('productForm');
+    const progressBar = document.getElementById('progressBar');
+    const allInputs = form.querySelectorAll('input, textarea, select');
+    const requiredInputs = form.querySelectorAll('[required]');
+
+    function updateProgress() {
+      let filled = 0;
+      requiredInputs.forEach(input => {
+        if (input.value.trim() !== '') filled++;
+      });
+      const percent = (filled / requiredInputs.length) * 100;
+      progressBar.style.width = percent + '%';
+    }
+
+    allInputs.forEach(input => {
+      input.addEventListener('input', updateProgress);
+      input.addEventListener('change', updateProgress);
+    });
+
+    // Form submission
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      // Collect form data
+      const formData = new FormData(form);
+      const data = {};
+      formData.forEach((value, key) => {
+        data[key] = value;
+      });
+      
+      // For now, log to console and show success
+      console.log('Form Data:', data);
+      
+      alert('✅ Product information submitted successfully!\n\nIn a real implementation, this would be sent to your backend or email.');
+    });
+
+    // Initialize progress
+    updateProgress();
+  </script>
+</body>
+</html>
