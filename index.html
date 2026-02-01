@@ -339,7 +339,7 @@
       <p>Complete this form to optimize your products for Google Merchant Center and improve visibility across Google Shopping, Search, and more.</p>
     </div>
 
-    <form id="productForm">
+    <form id="productForm" action="https://formspree.io/f/xgozwgaa" method="POST">
       <!-- Section 1: Basic Product Info -->
       <div class="form-section">
         <div class="section-header">
@@ -721,7 +721,7 @@
 
     // Form submission
     form.addEventListener('submit', (e) => {
-      e.preventDefault();
+      // Submitting to Formspree
       
       // Collect form data
       const formData = new FormData(form);
@@ -731,9 +731,9 @@
       });
       
       // For now, log to console and show success
-      console.log('Form Data:', data);
       
-      alert('✅ Product information submitted successfully!\n\nIn a real implementation, this would be sent to your backend or email.');
+      
+      // Formspree handles submission
     });
 
     // Initialize progress
